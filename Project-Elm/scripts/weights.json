@@ -1,0 +1,103 @@
+{
+  "VerifyExamples": {
+    "Util": {
+      "#groupBy": {
+        "groupBy (modBy 10) [ 11, 12, 21, 22 ] --> [(1, [11, 21]), (2, [12, 22])]": 0.25,
+        "groupBy .x [ { x = 1 } ] --> [(1, [{x = 1}])]": 0.25,
+        "groupBy identity [] --> []": 0.25
+      },
+      "#zipFilter": {
+        "zipFilter [ False, False ] [ 1, 2 ] --> []": 0.33,
+        "zipFilter [ True, False, True, False ] [ 1, 2, 3, 4 ] --> [1, 3]": 0.33,
+        "zipFilter [ True, True ] [ 1, 2 ] --> [1, 2]": 0.34
+      },
+      "#minimumBy": {
+        "minimumBy (modBy 10) [ 16, 23, 14, 5 ] --> Just 23": 0.125,
+        "minimumBy .x [ { x = 1, y = 2 } ] --> Just {x = 1, y = 2}": 0.125,
+        "minimumBy .x [] --> Nothing": 0.125
+      },
+      "#maximumBy": {
+        "maximumBy (modBy 10) [ 16, 23, 14, 5 ] --> Just 16": 0.125,
+        "maximumBy .x [ { x = 1, y = 2 } ] --> Just {x = 1, y = 2}": 0.125,
+        "maximumBy .x [] --> Nothing": 0.125
+      },
+      "#maybeToList": {
+        "maybeToList (Just 1) --> [1]": 0.25,
+        "maybeToList Nothing --> []": 0.25
+      }
+    },
+    "Model": {
+      "WeatherData": {
+        "#toHourlyDataPoints": {
+          "toHourlyDataPoints weatherData --> [ HourlyDataPoint (Time.millisToPosix 1667779200000) 6.9 0 --> , HourlyDataPoint (Time.millisToPosix 1667782800000) 6.4 0.1 --> , HourlyDataPoint (Time.millisToPosix 1667786400000) 5.6 0.2 --> , HourlyDataPoint (Time.millisToPosix 1667790000000) 5.4 0.3 --> ]": 0.5
+        }
+      },
+      "WeatherItems": {
+        "#allSelected": {
+          "List.all (\\i -> isItemSelected i allSelected) weatherItems --> True": 0.25,
+          "isItemSelected Temperature allSelected --> True": 0.25
+        },
+        "#isItemSelected": {
+          "isItemSelected Temperature allSelected --> True": 0.5
+        },
+        "#set": {
+          "allSelected |> set Precipitation False |> isItemSelected Temperature --> True": 0.25,
+          "allSelected |> set Temperature False |> isItemSelected Temperature --> False": 0.25
+        }
+      }
+    }
+  },
+  "DayViewTests": {
+    "View.Day module": {
+      "Day view contains all data fields": {
+        "date": 0.5,
+        "highTemp": 0.15,
+        "highTemp (Nothing case)": 0.15,
+        "lowTemp": 0.15,
+        "lowTemp (Nothing case)": 0.15,
+        "precipitation": 0.4
+      },
+      "Day view has required classes": {
+        "day-hightemp": 0.2,
+        "day-lowtemp": 0.2,
+        "day-precipitation": 0.3,
+        "day-date": 0.3
+      },
+      "Day view has class day": 0.5
+    }
+  },
+  "WeekViewTests": {
+    "View.Week module": {
+      "Week view contains the start and end dates": 1,
+      "Week view shows \"No data\" when the list of days is empty": 0.5,
+      "Week view has the correct number of days": 0.5,
+      "Week view has class week": 0.5
+    }
+  },
+  "MainTests": {
+    "Main module": {
+      "getChartData extracts data from the model correctly": 1.5,
+      "getWeeklyData extracts data from the model correctly": 1.5,
+      "view": {
+        "view contains 4 checkboxes": 0.5
+      },
+      "update": {
+        "The selected weather items state is changed correctly in update": 0.5
+      }
+    }
+  },
+  "WeatherDataTests": {
+    "Model.WeatherData module": {
+      "decodeHourlyData returns an error for invalid data": 0.5,
+      "decodeHourlyData works correctly": 1,
+      "decodeWeatherData returns an error for invalid data": 0.5,
+      "decodeWeatherData works correctly": 1
+    }
+  },
+  "WeatherItemsViewTests": {
+    "View.WeatherItems module": {
+      "The correct message is sent when a checkbox is clicked": 0.25,
+      "view contains 4 checkboxes": 0.25
+    }
+  }
+}

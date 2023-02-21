@@ -1,0 +1,9 @@
+{
+  "root": "../src",
+  "tests": [
+    "Util", 
+    "Util.Time",
+    "Model.WeatherData",
+    "Model.WeatherItems"
+  ]
+}
